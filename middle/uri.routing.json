@@ -1,0 +1,47 @@
+/*! BikechainJS (uri.routing.json)
+	v0.0.1.3 (c) Kyle Simpson
+	MIT License
+*/
+
+
+[	
+	// routing defaults to handling all requests
+	
+	{ "ignore": "^favicon.ico$", "which": "REQUEST_FILENAME" },
+	
+	{ "ignore": "^\/(css|js|images)\/", "which": "RELATIVE_REQUEST_DIRECTORY" }
+	
+]
+
+
+
+
+
+
+/******************************************** 
+
+valid values for `which` property of a rule (defaults to REQUEST_URI):
+
+http://domain.tld/blah/foo.bar?abc=def
+
+REQUEST_URI							/blah/foo.bar?abc=def
+RELATIVE_REQUEST_URI				/blah/foo.bar?abc=def
+QUERY_STRING						abc=def
+RELATIVE_REQUEST_PATH				/blah/foo.bar
+RELATIVE_REQUEST_DIRECTORY			/blah/
+REQUEST_FILENAME					foo.bar
+REQUEST_FILENAME_EXTENSION			bar
+DOCUMENT_ROOT						/path/to/docroot
+SCRIPT_FILENAME						/path/to/docroot/middle/uri.routing
+SCRIPT_ROOT							/middle/
+SCRIPT_NAME							/middle/uri.routing
+REQUEST_METHOD						(GET,POST,etc)
+SERVER_PORT							(numeric)
+REMOTE_ADDR							(ip address)
+HTTP_HOST							domain.tld
+
+*********************************************/
+
+
+//{ "ignore": ".+" },	// ignore every non-empty request uri
+//{ "handle": "^(login|logout|newpic|submit)\\b" }	// handle app specific request uri actions

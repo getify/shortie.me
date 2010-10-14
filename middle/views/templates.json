@@ -1,0 +1,18 @@
+/*! BikechainJS (uri.routing.js)
+	v0.0.1.3 (c) Kyle Simpson
+	MIT License
+*/
+
+{
+	"index": "views/tmpl.index.html#master",
+	"index_partial": "views/tmpl.index.html#content",
+	
+	"shortened_url": "views/tmpl.index.html#master",
+	"shortened_url_partial": "views/tmpl.index.html#shortened",
+	
+	"internal_error": "views/tmpl.general_error.html#master",
+	"general_error": "views/tmpl.general_error.html#master",
+	"redirect_error": "views/tmpl.redirect_error.html#master",
+	"input_error": "views/tmpl.input_error.html#master"
+
+}

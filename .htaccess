@@ -1,0 +1,7 @@
+Options +ExecCGI
+AddHandler cgi-script routing
+XSendFile on
+XSendFileAllowAbove on
+
+RewriteEngine on
+RewriteRule .* middle/uri.routing [L]

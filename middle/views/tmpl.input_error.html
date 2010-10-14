@@ -1,0 +1,11 @@
+{$+ "views/tmpl.master.html" $}
+
+{$: "#content" }
+	<h1>Error</h1>
+	<p>
+		Not valid: {$= data.orig_url $} 
+	</p>
+	<p>
+		URL must be of the form: http://domain.tld/path and be 1000 characters or less.
+	</p>
+{$}

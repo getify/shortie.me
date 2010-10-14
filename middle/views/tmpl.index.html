@@ -1,0 +1,27 @@
+{$+ "views/tmpl.master.html" $}
+
+
+{$: "#content" | shortened=data.shortened_url_slug?"#shortened" }
+	<div id="indicator"></div>
+
+	<h1>Shortie.me URL shortener</h1>
+	<form name="enter_url" id="enter_url" action="/shortenurl" method="post">
+		<input id="orig_url" name="orig_url" max_length="1000" value="{$= data.orig_url $}" />
+		<input id="do_shorten" type="submit" value="shorten" />
+	</form>
+	
+	<div id="results">
+		{$= @shortened $}
+	</div>
+{$}
+
+
+{$: "#shortened" }
+	<p>
+		Here's your new shortened URL:
+	</p>
+	
+	<h2 title="{$= data.orig_url $}">
+		http://shortie.me/!{$= data.shortened_url_slug $}
+	</h2>
+{$}

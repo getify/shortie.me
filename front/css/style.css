@@ -1,0 +1,14 @@
+body { background-color:#9c3; }
+
+#main { margin:20px auto; background-color:#fff; width:800px; padding:20px; }
+
+#indicator { float:right; display:none; background:url(../images/ajax-loader.gif) 0 0 no-repeat; width:16px; height:16px; }
+
+#homelink { float:left; text-decoration:underline; color:#000; }
+#homelink:hover { text-decoration:none; }
+
+h1 { text-align:center; }
+
+#orig_url { padding:5px; font-size:16px; font-weight:bold; color:#470; width:400px; display:block; margin:10px auto; }
+
+#do_shorten { font-size:20px; background-color:#470; color:#fff; font-weight:bold; width:100px; display:block; margin:0px auto; border:1px solid #222; }

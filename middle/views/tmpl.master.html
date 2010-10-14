@@ -1,0 +1,51 @@
+
+{$: "#master" }<!DOCTYPE html>
+<html>
+	<head>
+	<title>Shortie.me</title>
+	
+	{$= @"#styles" $}
+	</head>
+	
+	<body>
+	
+	<div id="main">
+		<a id="homelink" href="/">home</a>
+	
+		{$= @"#content" $}
+	</div>
+
+	<script src="/js/LAB.js"></script>
+	{$= @"#script_loading" $}
+	
+	</body>
+</html>
+{$}
+
+
+{$: "#styles" }
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+{$}
+
+
+{$: "#script_loading" }{$%
+<script>
+$LAB
+.script("http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js").wait()
+.script("/js/main.js")
+.script("/controllers/validate.js")
+.script("/controllers/format.js")
+.wait(function(){
+	init();
+})
+.script("/controllers/handlebar/handlebar.js").wait()
+.script("/controllers/handlebar/util.handlebar.js").wait()
+.script("/bikechain/misc/minify.json.js",
+		"/controllers/handlebar/promise.handlebar.js",
+		"/controllers/handlebar/xhr-loader.handlebar.js"
+)
+.wait(function(){
+	Handlebar.init("/views/templates.json");
+});
+</script>
+%$}{$}
