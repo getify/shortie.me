@@ -5,6 +5,8 @@ function updateResults(data) {
 	if (typeof data == "string") data = JSON.parse(data);
 	
 	if (data.ERROR) {
+		submit_in_progress = false;
+		$("#do_shorten").removeAttr("disabled");
 		alert("There was an error processing the request. Please try again.");
 	}
 	else if (data.APP_STATE) {
@@ -17,6 +19,10 @@ function updateResults(data) {
 			submit_in_progress = false;
 		});
 	}
+	else {
+		submit_in_progress = false;
+		$("#do_shorten").removeAttr("disabled");
+	}
 }
 
 function init() {	
@@ -26,12 +32,11 @@ function init() {
 	
 	$("#enter_url").bind("submit",function(evt){
 		if (!submit_in_progress) {
-			submit_in_progress = true;
 			var orig_url = $("#orig_url").val();
-			
-			$("#do_shorten").attr("disabled","true");
-			
+						
 			if (ValidateURL(orig_url)) {
+				submit_in_progress = true;
+				$("#do_shorten").attr("disabled","true");
 				$.post("/shortenurl",{
 						"__partial__":true, // tells the app we only want the data to return, not the full html page
 						"orig_url": orig_url
