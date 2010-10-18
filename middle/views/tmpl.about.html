@@ -1,0 +1,25 @@
+{$+ "views/tmpl.master.html" $}
+
+
+{$: "#content" | shortened=data.shortened_url_slug?"#shortened" | recent=data.result_set?"#recent" }
+	<h1>About Shortie.me URL shortener</h1>
+	
+	<p>
+		This URL shortener is a proof-of-concept demo for <a href="http://middleend.com">Middle-end UI Architecture</a> 
+		concepts and the <a href="http://cvcpattern.com">CVC (Clients-Views-Controllers) pattern</a>. It is, of course,
+		an alpha stage work in progress, and thus should not be relied on for production URL shortening.
+	</p>
+	<p>
+		Shortie.me uses server-side JavaScript (run through the <a href="http://bikechainjs.com">BikechainJS</a> engine)
+		to construct a DRY (reusable) set of UI Controllers that can be used for middle-end tasks on both the client and
+		the server using the exact same code. One important UI Controller in use (both browser and server) is the
+		<a href="http://handlebarjs.com">HandlebarJS</a> templating engine.
+	</p>
+	<p>
+		If you're interested in more information on the "middle-end", check out the
+		<a href="http://www.slideshare.net/shadedecho/dude-thats-some-strange-ui-architecture">"Dude, That's Some Strange
+		UI Architecture" slide-deck</a> and the 
+		<a href="http://blog.getify.com/2010/08/jsconf-2010-getify-on-middle-endui-architecture/">"Dude, Where's My UI 
+		Architecture?" video</a> from <a href="http://jsconf.us/2010">JSConf '10 JavaScript conference</a>.
+	</p>
+{$}

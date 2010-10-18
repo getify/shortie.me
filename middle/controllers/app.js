@@ -3,10 +3,9 @@
 return (function(){
 	var publicAPI;
 	
-	function run(REQUEST,RESPONSE,URI_ROUTER) {
-		
-		if (URI_ROUTER.RequestPath().match(/^\/(controllers|views|bikechain\/misc)\/.+/i)) {
-			RESPONSE.Header("X-Location: "+URI_ROUTER.RequestPath());
+	function run(REQUEST,RESPONSE,URI_ROUTER) {		
+		if (URI_ROUTER.RequestPath(REQUEST).match(/^\/(controllers|views|bikechain\/misc)\/.+/i)) {
+			RESPONSE.Header("X-Location: "+URI_ROUTER.RequestPath(REQUEST));
 			exit();
 		}
 		
@@ -16,6 +15,13 @@ return (function(){
 			resp_data,
 			__partial__ = REQUEST_HANDLER.exists(REQUEST,"__partial__")
 		;
+		
+		// initialize Handlebar templating controller
+		include_once("controllers/handlebar/handlebar.js");
+		include_once("controllers/handlebar/local-loader.handlebar.js");
+		include_once("controllers/handlebar/promise.handlebar.js");
+		include_once("controllers/handlebar/util.handlebar.js");
+		Handlebar.init("views/templates.json");
 		
 		// parse session cookie data from REQUEST
 		if (REQUEST.COOKIES && REQUEST.COOKIES.SessionCookie) {
@@ -30,6 +36,18 @@ return (function(){
 		}
 		else {
 			RESPONSE.Header("Content-type: text/html");
+		}
+		
+		// special handling for any 'static_state' REQUESTs
+		var handle_rules = URI_ROUTER.GetHandleRules(REQUEST);
+		for (var i=0, len=handle_rules.length; i<len; i++) {
+			if (handle_rules[i].static_state) {
+				Handlebar.processState(handle_rules[i].static_state,{})
+				.then(function(P){
+					RESPONSE.Output(P.value);
+				});
+				exit();
+			}
 		}
 
 		// validate incoming data
@@ -66,13 +84,6 @@ return (function(){
 			if (resp_data.SESSION_NAME && resp_data.SESSION_ID && (resp_data.SESSION_FORCE || !(REQUEST.COOKIES && REQUEST.COOKIES.SessionCookie))) {
 				RESPONSE.SessionCookie(resp_data.SESSION_NAME,resp_data.SESSION_ID,REQUEST.HTTP_HOST,"/");	
 			}
-
-			// initialize Handlebar templating controller
-			include_once("controllers/handlebar/handlebar.js");
-			include_once("controllers/handlebar/local-loader.handlebar.js");
-			include_once("controllers/handlebar/promise.handlebar.js");
-			include_once("controllers/handlebar/util.handlebar.js");
-			Handlebar.init("views/templates.json");
 			
 			// route to various controllers based on app's new APP_STATE
 			switch (resp_data.APP_STATE) {

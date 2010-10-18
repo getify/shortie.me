@@ -39,7 +39,7 @@
 		}
 		else {	// otherwise, defer to web server layer for handling
 			// make all file requests relative to the `/front/` sub-directory
-			RESPONSE.Header("X-Location: ../front"+URI_ROUTER.RequestPath());
+			RESPONSE.Header("X-Location: ../front"+URI_ROUTER.RequestPath(REQUEST));
 			exit();
 		}
 	}

@@ -6,8 +6,7 @@
 return (function(){
 
 	var publicAPI,
-		uri_routing_rules = [],
-		request_path = ""
+		uri_routing_rules = []
 	;
 
 	function checkRules(REQUEST) {
@@ -42,22 +41,36 @@ return (function(){
 	}
 	
 	function HandleRequest(REQUEST) {
-		request_path = REQUEST.RELATIVE_REQUEST_PATH;
-		
 		if (checkRules(REQUEST)) {
 			return true;
 		}
 		return false;
 	}
 	
-	function RequestPath() {
-		return request_path;
+	function RequestPath(REQUEST) {
+		return REQUEST.RELATIVE_REQUEST_PATH;
+	}
+	
+	function GetHandleRules(REQUEST) {
+		var i, len, field, default_field = "RELATIVE_REQUEST_PATH", regex, rules = [];
+		
+		for (i=0, len=uri_routing_rules.length; i<len; i++) {
+			field = uri_routing_rules[i].which || default_field;
+			if (uri_routing_rules[i].handle) {
+				regex = new RegExp(uri_routing_rules[i].handle || uri_routing_rules[i].ignore);
+				if (typeof REQUEST[field] != "undefined" && regex.test(REQUEST[field])) {
+					rules.push(uri_routing_rules[i]);
+				}
+			}
+		}
+		return rules;
 	}
 
 	publicAPI = {
 		RegisterRoutes:RegisterRoutes,
 		HandleRequest:HandleRequest,
-		RequestPath:RequestPath
+		RequestPath:RequestPath,
+		GetHandleRules:GetHandleRules
 	};
 	return publicAPI;
 

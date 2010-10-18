@@ -10,6 +10,8 @@
 	"shortened_url": "views/tmpl.index.html#master",
 	"shortened_url_partial": "views/tmpl.index.html#shortened",
 	
+	"about": "views/tmpl.about.html#master",
+	
 	"internal_error": "views/tmpl.general_error.html#master",
 	"general_error": "views/tmpl.general_error.html#master",
 	"redirect_error": "views/tmpl.redirect_error.html#master",

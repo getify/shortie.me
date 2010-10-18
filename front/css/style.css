@@ -4,8 +4,9 @@ body { background-color:#9c3; }
 
 #indicator { float:right; display:none; background:url(../images/ajax-loader.gif) 0 0 no-repeat; width:16px; height:16px; }
 
-#homelink { float:left; text-decoration:underline; color:#000; }
-#homelink:hover { text-decoration:none; }
+#navlinks { float:left; width:100px; }
+	#navlinks a { text-decoration:underline; color:#000; }
+	#navlinks a:hover { text-decoration:none; }
 
 h1 { text-align:center; }
 

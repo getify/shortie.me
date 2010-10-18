@@ -9,7 +9,9 @@
 	
 	{ "ignore": "^favicon.ico$", "which": "REQUEST_FILENAME" },
 	
-	{ "ignore": "^\/(css|js|images)\/", "which": "RELATIVE_REQUEST_DIRECTORY" }
+	{ "ignore": "^\/(css|js|images)\/", "which": "RELATIVE_REQUEST_DIRECTORY" },
+	
+	{ "handle": "/about", "which": "RELATIVE_REQUEST_URI", "static_state": "about" }
 	
 ]
 
