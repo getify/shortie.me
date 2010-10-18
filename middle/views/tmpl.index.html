@@ -1,7 +1,7 @@
 {$+ "views/tmpl.master.html" $}
 
 
-{$: "#content" | shortened=data.shortened_url_slug?"#shortened" }
+{$: "#content" | shortened=data.shortened_url_slug?"#shortened" | recent=data.result_set?"#recent" }
 	<div id="indicator"></div>
 
 	<h1>Shortie.me URL shortener</h1>
@@ -12,6 +12,10 @@
 	
 	<div id="results">
 		{$= @shortened $}
+	</div>
+	
+	<div id="recent">
+		{$= @recent $}
 	</div>
 {$}
 
@@ -24,4 +28,21 @@
 	<h2 title="{$= data.orig_url $}">
 		http://shortie.me/!{$= data.shortened_url_slug $}
 	</h2>
+{$}
+
+
+{$: "#recent" }
+	<hr />
+	<ul>
+		{$* data.result_set }
+			{$= @"#recent_result" $}		
+		{$}
+	</ul>
+{$}
+
+
+{$: "#recent_result" }
+	<li>
+		<a href="http://shortie.me/!{$= item.value.shortened_url_slug $}">{$= item.value.orig_url $}</a>
+	</li>
 {$}

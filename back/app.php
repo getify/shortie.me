@@ -27,10 +27,23 @@ if ($REQUEST) {
 	// *********************************************************************************
 
 	$output = array();
+	$start = 0;
+
+	if (isset($REQUEST->APP_RESULTS_START)) {
+		$start = (int)($REQUEST->RESULTS_START);
+		$output["APP_RESULTS_START"] = $start;
+	}
 	
 	if ($REQUEST->RELATIVE_REQUEST_PATH == "/") {
 		$output["APP_STATE"] = "index";
-		$output["APP_DATA"] = array();
+		$output["APP_DATA"] = $output["APP_DATA"] || array();
+		
+		require_once($REQUEST->DOCUMENT_ROOT."/back/results.php");
+		
+		$results = get_recent_results($start);
+		if ($results) {
+			$output["APP_DATA"]["result_set"] = $results;
+		}
 	}
 	else if ($REQUEST->RELATIVE_REQUEST_PATH == "/shortenurl") {
 		$orig_url = "";
@@ -47,6 +60,7 @@ if ($REQUEST) {
 				$shortened_url = null;
 				
 				require_once($REQUEST->DOCUMENT_ROOT."/back/shorten.php");
+				require_once($REQUEST->DOCUMENT_ROOT."/back/results.php");
 	
 				@mysql_query("LOCK TABLES shortened WRITE",$SHDB);			
 				$slug = generate_slug();
@@ -55,8 +69,14 @@ if ($REQUEST) {
 				$result = mysql_query($query,$SHDB);
 				
 				if ($result && mysql_affected_rows($SHDB) > 0) {
+					$output["APP_DATA"] = $output["APP_DATA"] || array();
 					$output["APP_STATE"] = "shortened_url";
 					$output["APP_DATA"] = array("orig_url" => $orig_url, "shortened_url_slug" => $slug);
+					
+					$results = get_recent_results($start);
+					if ($results) {
+						$output["APP_DATA"]["result_set"] = $results;
+					}
 				}
 				else {
 					$error_output = array("APP_STATE" => "error", "ERROR" => "internal_error", "ERROR_DATA" => array("orig_url" => $orig_url));
