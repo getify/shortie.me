@@ -2,7 +2,7 @@
 {$: "#master" }<!DOCTYPE html>
 <html>
 	<head>
-	<title>Shortie.me</title>
+	<title>Shortie.me{$= @"#pagetitle" $}</title>
 	
 	{$= @"#styles" $}
 	</head>
@@ -22,6 +22,8 @@
 </html>
 {$}
 
+
+{$: "#pagetitle" } URL Shortener{$}
 
 {$: "#styles" }
 <link rel="stylesheet" type="text/css" href="/css/style.css" />

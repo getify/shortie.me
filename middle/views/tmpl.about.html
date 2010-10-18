@@ -1,5 +1,6 @@
 {$+ "views/tmpl.master.html" $}
 
+{$: "#pagetitle" } :: About{$}
 
 {$: "#content" | shortened=data.shortened_url_slug?"#shortened" | recent=data.result_set?"#recent" }
 	<h1>About Shortie.me URL shortener</h1>
