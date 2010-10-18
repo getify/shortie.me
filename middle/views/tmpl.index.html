@@ -33,6 +33,7 @@
 
 {$: "#recent" }
 	<hr />
+	<h2>Recent URLs shortened</h2>
 	<ul>
 		{$* data.result_set }
 			{$= @"#recent_result" $}		
@@ -43,6 +44,7 @@
 
 {$: "#recent_result" }
 	<li>
+		<img class="linkicon" src="http://www.google.com/s2/favicons?domain={$= item.value.orig_url_domain $}" alt="Site Icon" />
 		<a href="http://shortie.me/!{$= item.value.shortened_url_slug $}">{$= item.value.orig_url $}</a>
 	</li>
 {$}

@@ -13,3 +13,8 @@ h1 { text-align:center; }
 #orig_url { padding:5px; font-size:16px; font-weight:bold; color:#470; width:400px; display:block; margin:10px auto; }
 
 #do_shorten { font-size:20px; background-color:#470; color:#fff; font-weight:bold; width:100px; display:block; margin:0px auto; border:1px solid #222; }
+
+.linkicon { width:16px; height:16px; border:none; }
+
+#recent ul { list-style:none; margin:0px; padding:0px; }
+#recent ul li { margin:3px 0px; padding:0px; white-space:nowrap; width:100%; overflow:hidden; }

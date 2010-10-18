@@ -10,6 +10,10 @@ function get_recent_results($start) {
 	
 	if ($result && mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
+			$parts = parse_url($row["orig_url"]);
+			if ($parts && $parts["host"]) {
+				$row["orig_url_domain"] = $parts["host"];
+			}
 			$results[] = $row;
 		}
 		return $results;
