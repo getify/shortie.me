@@ -72,6 +72,10 @@ if ($REQUEST) {
 					$output["APP_DATA"] = $output["APP_DATA"] || array();
 					$output["APP_STATE"] = "shortened_url";
 					$output["APP_DATA"] = array("orig_url" => $orig_url, "shortened_url_slug" => $slug);
+					$parts = parse_url($orig_url);
+					if ($parts && $parts["host"]) {
+						$output["APP_DATA"]["orig_url_domain"] = $parts["host"];
+					}
 					
 					$results = get_recent_results($start);
 					if ($results) {

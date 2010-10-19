@@ -15,8 +15,14 @@ function updateResults(data) {
 		.then(function(P){
 			$("#indicator").hide();
 			$("#do_shorten").removeAttr("disabled");
+			$("#orig_url").val("");
 			$("#results").html(P.value);
 			submit_in_progress = false;
+			
+			Handlebar.processState("single_result",data.APP_DATA)
+			.then(function(P){
+				$(P.value).prependTo("#recent ul");
+			});
 		});
 	}
 	else {
@@ -28,7 +34,7 @@ function updateResults(data) {
 function init() {	
 	$("#indicator").ajaxStart(function(){
 		$(this).show();
-	})
+	});
 	
 	$("#enter_url").bind("submit",function(evt){
 		if (!submit_in_progress) {

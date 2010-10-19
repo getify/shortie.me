@@ -12,6 +12,8 @@
 	
 	"about": "views/tmpl.about.html#master",
 	
+	"single_result": "views/tmpl.index.html#recent_result",
+	
 	"internal_error": "views/tmpl.general_error.html#master",
 	"general_error": "views/tmpl.general_error.html#master",
 	"redirect_error": "views/tmpl.redirect_error.html#master",
