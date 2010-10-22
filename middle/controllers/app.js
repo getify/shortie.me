@@ -70,13 +70,15 @@ return (function(){
 			// format outgoing data
 			include_once("controllers/format.js");
 			if (resp_data.APP_DATA || resp_data.ERROR_DATA) {
-				var orig_url = (resp_data.APP_DATA) ? resp_data.APP_DATA["orig_url"] : resp_data.ERROR_DATA["orig_url"];
+				var data_set = resp_data.APP_DATA || resp_data.ERROR_DATA;
 				
-				if (resp_data.APP_DATA && typeof resp_data.APP_DATA["orig_url"] != "undefined") {
-					resp_data.APP_DATA["orig_url"] = FormatURL(resp_data.APP_DATA["orig_url"]);
+				if (typeof data_set["orig_url"] != "undefined") {
+					data_set["orig_url"] = FormatURL(data_set["orig_url"]);
 				}
-				else if (resp_data.ERROR_DATA && typeof resp_data.ERROR_DATA["orig_url"] != "undefined") {
-					resp_data.ERROR_DATA["orig_url"] = FormatURL(resp_data.ERROR_DATA["orig_url"]);
+				if (typeof data_set["result_set"] != "undefined") {
+					for (var i=0, len=data_set["result_set"].length; i<len; i++) {
+						data_set["result_set"][i]["orig_url"] = FormatURL(data_set["result_set"][i]["orig_url"]);
+					}
 				}
 			}
 			
