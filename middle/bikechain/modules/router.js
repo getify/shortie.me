@@ -1,5 +1,5 @@
 /*! BikechainJS (router.js)
-	v0.0.1.3 (c) Kyle Simpson
+	v0.0.1.4 (c) Kyle Simpson
 	MIT License
 */
 
@@ -10,18 +10,19 @@ return (function(){
 	;
 
 	function checkRules(REQUEST) {
-		var i, len, check = true, field, handle, default_field = "RELATIVE_REQUEST_PATH", regex;
+		var REQUEST_DATA = REQUEST.GetData(), i, len, handle = true, 
+			field, default_field = "RELATIVE_REQUEST_PATH", regex
+		;
 		
 		for (i=0, len=uri_routing_rules.length; i<len; i++) {
-			field = uri_routing_rules[i].which || default_field;
-			handle = !(!uri_routing_rules[i].handle);
+			field = uri_routing_rules[i].field || default_field;
 			regex = new RegExp(uri_routing_rules[i].handle || uri_routing_rules[i].ignore);
-			if (typeof REQUEST[field] != "undefined" && regex.test(REQUEST[field])) {
-				check = handle;
+			if (typeof REQUEST_DATA[field] != "undefined" && regex.test(REQUEST_DATA[field])) {
+				handle = (typeof uri_routing_rules[i].handle != "undefined");
 			}
 		}
 		
-		return check;
+		return handle;
 	}
 	
 	function RegisterRoutes(routes_filename) {
@@ -31,7 +32,7 @@ return (function(){
 			rules = FS.read(routes_filename);
 			if (!rules) throw new Error(""); // trigger error-catch clause since rules is empty
 			rules = JSON.parse(JSON.minify(rules)); 
-			rules.concat(); 
+			rules.concat(); // ensure `rules` is an array
 		}
 		catch (err) { return false; }
 		
@@ -47,18 +48,31 @@ return (function(){
 		return false;
 	}
 	
-	function RequestPath(REQUEST) {
-		return REQUEST.RELATIVE_REQUEST_PATH;
+	function GetRequestPath(REQUEST) {
+		var REQUEST_DATA = REQUEST.GetData(), i, len, field, prefix = "", 
+			default_field = "RELATIVE_REQUEST_PATH", regex, rules = []
+		;
+		
+		for (i=0, len=uri_routing_rules.length; i<len; i++) {
+			field = uri_routing_rules[i].field || default_field;
+			regex = new RegExp(uri_routing_rules[i].handle || uri_routing_rules[i].ignore);
+			if (typeof REQUEST_DATA[field] != "undefined" && regex.test(REQUEST_DATA[field]) && typeof uri_routing_rules[i].path_prefix != "undefined") {
+				prefix = uri_routing_rules[i].path_prefix;
+			}
+		}
+		return prefix + REQUEST_DATA.RELATIVE_REQUEST_PATH;
 	}
 	
 	function GetHandleRules(REQUEST) {
-		var i, len, field, default_field = "RELATIVE_REQUEST_PATH", regex, rules = [];
+		var REQUEST_DATA = REQUEST.GetData(), i, len, field, 
+			default_field = "RELATIVE_REQUEST_PATH", regex, rules = []
+		;
 		
 		for (i=0, len=uri_routing_rules.length; i<len; i++) {
-			field = uri_routing_rules[i].which || default_field;
+			field = uri_routing_rules[i].field || default_field;
 			if (uri_routing_rules[i].handle) {
-				regex = new RegExp(uri_routing_rules[i].handle || uri_routing_rules[i].ignore);
-				if (typeof REQUEST[field] != "undefined" && regex.test(REQUEST[field])) {
+				regex = new RegExp(uri_routing_rules[i].handle);
+				if (typeof REQUEST_DATA[field] != "undefined" && regex.test(REQUEST_DATA[field])) {
 					rules.push(uri_routing_rules[i]);
 				}
 			}
@@ -67,10 +81,10 @@ return (function(){
 	}
 
 	publicAPI = {
-		RegisterRoutes:RegisterRoutes,
-		HandleRequest:HandleRequest,
-		RequestPath:RequestPath,
-		GetHandleRules:GetHandleRules
+		RegisterRoutes: RegisterRoutes,
+		HandleRequest: HandleRequest,
+		GetRequestPath: GetRequestPath,
+		GetHandleRules: GetHandleRules
 	};
 	return publicAPI;
 
