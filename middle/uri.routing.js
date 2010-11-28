@@ -1,49 +1,42 @@
 /*! BikechainJS (uri.routing.js)
-	v0.0.1.3 (c) Kyle Simpson
+	v0.0.1.4 (c) Kyle Simpson
 	MIT License
 */
 
 (function(global){
-	var system = require("system"),
-		REQUEST_HANDLER = require("request"),
+	var REQUEST = require("request"),
 		RESPONSE = require("response"),
 		URI_ROUTER = require("router"),
-		REQUEST,
+		STORAGE = require("storage"),
+		REQUEST_DATA,
 		APP
 	;
 	
 	// temporary output debugging
 	global.alert = global.console.log = global.console.warn = global.console.error = RESPONSE.Output;
 
-	// import the REQUEST environment from the web server layer
-	try {
-		REQUEST = system.stdin.read(false);
-		if (!REQUEST) throw new Error(""); // trigger error-catch clause since REQUEST is empty
-		REQUEST = JSON.parse(REQUEST);
-	}
-	catch (err) {
-		RESPONSE.Header("Status: 500 Internal Error");
-		exit();
-	}
-
-	// parse/process REQUEST data
-	REQUEST = REQUEST_HANDLER.parse(REQUEST);
-	
+	// import and process REQUEST_DATA 
+	REQUEST_DATA = REQUEST.Process();
+		
 	// register routing tables and check against REQUEST
 	if (URI_ROUTER.RegisterRoutes("uri.routing.json")) {
 	
 		// will application handle the request?
 		if (URI_ROUTER.HandleRequest(REQUEST)) {
+
+			// parse Storage cookie data from REQUEST
+			STORAGE.Init((REQUEST_DATA.COOKIES && REQUEST_DATA.COOKIES.Storage) ? REQUEST_DATA.COOKIES.Storage : null);
+
+			// load and run the application			
 			APP = require("./controllers/app");
-			APP.run(REQUEST,RESPONSE,URI_ROUTER);
+			APP.run();
 		}
 		else {	// otherwise, defer to web server layer for handling
-			// make all file requests relative to the `/front/` sub-directory
-			RESPONSE.Header("X-Location: ../front"+URI_ROUTER.RequestPath(REQUEST));
+			RESPONSE.Header("X-Location: "+URI_ROUTER.GetRequestPath(REQUEST));
 			exit();
 		}
 	}
-	else { // route registration failed, so must bail
+	else { // route registration failed, so bail
 		RESPONSE.Header("Status: 500 Internal Error");
 		exit();
 	}

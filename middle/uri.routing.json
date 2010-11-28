@@ -1,18 +1,19 @@
 /*! BikechainJS (uri.routing.json)
-	v0.0.1.3 (c) Kyle Simpson
+	v0.0.1.4 (c) Kyle Simpson
 	MIT License
 */
 
 
-[	
-	// routing defaults to handling all requests
+// NOTE: routing defaults to handling all requests
+[		
+	{ "ignore": "^favicon.ico$", "field": "REQUEST_FILENAME", "path_prefix": "../front" },
 	
-	{ "ignore": "^favicon.ico$", "which": "REQUEST_FILENAME" },
+	{ "ignore": "^/(css|js|images)/", "field": "RELATIVE_REQUEST_DIRECTORY", "path_prefix": "../front" },
 	
-	{ "ignore": "^\/(css|js|images)\/", "which": "RELATIVE_REQUEST_DIRECTORY" },
+	// expose some paths from the `middle` layer to web requests
+	{ "ignore": "^/(controllers|views|bikechain/misc)/", "field": "RELATIVE_REQUEST_DIRECTORY" },
 	
-	{ "handle": "/about", "which": "RELATIVE_REQUEST_URI", "static_state": "about" }
-	
+	{ "handle": "^/about(?:[/?#]|$)", "field": "RELATIVE_REQUEST_URI", "static_state": "about" }
 ]
 
 
@@ -43,7 +44,3 @@ REMOTE_ADDR							(ip address)
 HTTP_HOST							domain.tld
 
 *********************************************/
-
-
-//{ "ignore": ".+" },	// ignore every non-empty request uri
-//{ "handle": "^(login|logout|newpic|submit)\\b" }	// handle app specific request uri actions

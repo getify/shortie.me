@@ -56,7 +56,7 @@ if ($REQUEST) {
 		}
 	
 		if ($orig_url) {
-			if (!$REQUEST->INVALIDATED || !in_array("orig_url",$REQUEST->INVALIDATED)) {
+			if (!$REQUEST->__INVALIDATED__ || !in_array("orig_url",$REQUEST->__INVALIDATED__)) {
 				$shortened_url = null;
 				
 				require_once($REQUEST->DOCUMENT_ROOT."/back/shorten.php");
