@@ -93,6 +93,10 @@ return (function(){
 					break;
 				case "index":
 				case "shortened_url":
+					if (RESPONSE_DATA.APP_STATE == "shortened_url") {
+						RESPONSE.Header("Status: 201 Created");
+						RESPONSE.Header("Location: http://shortie.me/!"+RESPONSE_DATA.APP_DATA.shortened_url_slug);
+					}
 					if (__partial__) {
 						RESPONSE_DATA.APP_STATE += "_partial";
 						RESPONSE.Output(JSON.stringify({"APP_STATE": RESPONSE_DATA.APP_STATE, "APP_DATA": RESPONSE_DATA.APP_DATA}));
