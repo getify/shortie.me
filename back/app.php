@@ -59,34 +59,40 @@ if ($REQUEST) {
 			if (!$REQUEST->__INVALIDATED__ || !in_array("orig_url",$REQUEST->__INVALIDATED__)) {
 				$shortened_url = null;
 				
-				require_once($REQUEST->DOCUMENT_ROOT."/back/shorten.php");
-				require_once($REQUEST->DOCUMENT_ROOT."/back/results.php");
-	
-				@mysql_query("LOCK TABLES shortened WRITE",$SHDB);			
-				$slug = generate_slug();
-				
-				$query = sprintf("INSERT INTO shortened (orig_url,slug) VALUES('%s','%s')",mysql_escape_string($orig_url),$slug);
-				$result = mysql_query($query,$SHDB);
-				
-				if ($result && mysql_affected_rows($SHDB) > 0) {
-					$output["APP_DATA"] = $output["APP_DATA"] || array();
-					$output["APP_STATE"] = "shortened_url";
-					$output["APP_DATA"] = array("orig_url" => $orig_url, "shortened_url_slug" => $slug);
-					$parts = parse_url($orig_url);
-					if ($parts && $parts["host"]) {
-						$output["APP_DATA"]["orig_url_domain"] = $parts["host"];
-					}
-					
-					$results = get_recent_results($start);
-					if ($results) {
-						$output["APP_DATA"]["result_set"] = $results;
-					}
+				// trying to cut down on link spam
+				if (preg_match("/xserv1\.umb\.edu/",$orig_url)) {
+					$error_output = array("APP_STATE" => "error", "ERROR" => "input_error", "ERROR_DATA" => array("orig_url" => $orig_url));
 				}
 				else {
-					$error_output = array("APP_STATE" => "error", "ERROR" => "internal_error", "ERROR_DATA" => array("orig_url" => $orig_url));
+					require_once($REQUEST->DOCUMENT_ROOT."/back/shorten.php");
+					require_once($REQUEST->DOCUMENT_ROOT."/back/results.php");
+		
+					@mysql_query("LOCK TABLES shortened WRITE",$SHDB);			
+					$slug = generate_slug();
+					
+					$query = sprintf("INSERT INTO shortened (orig_url,slug) VALUES('%s','%s')",mysql_escape_string($orig_url),$slug);
+					$result = mysql_query($query,$SHDB);
+					
+					if ($result && mysql_affected_rows($SHDB) > 0) {
+						$output["APP_DATA"] = $output["APP_DATA"] || array();
+						$output["APP_STATE"] = "shortened_url";
+						$output["APP_DATA"] = array("orig_url" => $orig_url, "shortened_url_slug" => $slug);
+						$parts = parse_url($orig_url);
+						if ($parts && $parts["host"]) {
+							$output["APP_DATA"]["orig_url_domain"] = $parts["host"];
+						}
+						
+						$results = get_recent_results($start);
+						if ($results) {
+							$output["APP_DATA"]["result_set"] = $results;
+						}
+					}
+					else {
+						$error_output = array("APP_STATE" => "error", "ERROR" => "internal_error", "ERROR_DATA" => array("orig_url" => $orig_url));
+					}
+					
+					@mysql_query("UNLOCK TABLES",$SHDB);
 				}
-				
-				@mysql_query("UNLOCK TABLES",$SHDB);
 			}
 			else {
 				$error_output = array("APP_STATE" => "error", "ERROR" => "input_error", "ERROR_DATA" => array("orig_url" => $orig_url));
