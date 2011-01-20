@@ -1,0 +1,6 @@
+[submodule "middle/bikechain"]
+	path = middle/bikechain
+	url = git@github.com:getify/BikechainJS.git
+[submodule "middle/controllers/handlebar"]
+	path = middle/controllers/handlebar
+	url = git@github.com:getify/HandlebarJS.git
