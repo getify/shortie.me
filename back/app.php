@@ -60,7 +60,7 @@ if ($REQUEST) {
 				$shortened_url = null;
 				
 				// trying to cut down on link spam
-				if (preg_match("/xserv1\.umb\.edu/",$orig_url)) {
+				if (preg_match("/(xserv1\.umb\.edu)|(docs\.codehaus\.org)|(learn\.aero\.und\.edu)|(ccgps\.eastern\.edu)/",$orig_url)) {
 					$error_output = array("APP_STATE" => "error", "ERROR" => "input_error", "ERROR_DATA" => array("orig_url" => $orig_url));
 				}
 				else {
