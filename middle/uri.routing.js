@@ -13,7 +13,7 @@
 	;
 	
 	// temporary output debugging
-	global.alert = global.console.log = global.console.warn = global.console.error = RESPONSE.Output;
+	global.alert = RESPONSE.Output;
 
 	// import and process REQUEST_DATA 
 	REQUEST_DATA = REQUEST.Process();
@@ -33,11 +33,11 @@
 		}
 		else {	// otherwise, defer to web server layer for handling
 			RESPONSE.Header("X-Location: "+URI_ROUTER.GetRequestPath(REQUEST));
-			exit();
+			return;
 		}
 	}
 	else { // route registration failed, so bail
 		RESPONSE.Header("Status: 500 Internal Error");
-		exit();
+		return;
 	}
 })(this);

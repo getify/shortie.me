@@ -40,7 +40,7 @@ return (function(){
 				.then(function(P){
 					RESPONSE.Output(P.value);
 				});
-				exit();
+				return;
 			}
 		}
 
@@ -89,7 +89,7 @@ return (function(){
 					RESPONSE.Header("Location: "+RESPONSE_DATA.EXTERNAL_REDIRECT_URL);
 					RESPONSE.Header("Status: 301 Moved Permanently");
 					RESPONSE.Output("");
-					exit();
+					return;
 					break;
 				case "index":
 				case "shortened_url":
