@@ -1,3 +1,8 @@
+/*!	Shortie.me URL Shortener (app.js)
+	(c) Kyle Simpson
+	MIT License
+*/
+
 // Application UI Controller
 
 return (function(){

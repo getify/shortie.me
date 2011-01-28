@@ -1,4 +1,9 @@
 <?php
+/*!	Shortie.me URL Shortener (results.php)
+	(c) Kyle Simpson
+	MIT License
+*/
+
 
 function get_recent_results($start) {
 	global $SHDB;

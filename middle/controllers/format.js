@@ -1,3 +1,8 @@
+/*!	Shortie.me URL Shortener (format.js)
+	(c) Kyle Simpson
+	MIT License
+*/
+
 (function(global){
 
 	global.FormatURL = function(url) {

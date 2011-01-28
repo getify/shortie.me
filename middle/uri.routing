@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
-## BikechainJS (uri.routing)
-## v0.0.1.3 (c) Kyle Simpson
+## Shortie.me URL Shortener (uri.routing)
+## (c) Kyle Simpson
 ## MIT License
+
 
 use JSON;
 use MIME::Types;

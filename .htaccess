@@ -1,3 +1,7 @@
+## Shortie.me URL Shortener (.htaccess)
+## (c) Kyle Simpson
+## MIT License
+
 Options +ExecCGI
 AddHandler cgi-script routing
 XSendFile on

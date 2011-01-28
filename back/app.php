@@ -1,4 +1,9 @@
 <?php
+/*!	Shortie.me URL Shortener (app.php)
+	(c) Kyle Simpson
+	MIT License
+*/
+
 
 $input = file_get_contents("php://stdin");
 $REQUEST = @json_decode($input);

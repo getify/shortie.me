@@ -1,5 +1,5 @@
-/*! BikechainJS (uri.routing.js)
-	v0.0.1.4 (c) Kyle Simpson
+/*!	Shortie.me URL Shortener (uri.routing.js)
+	(c) Kyle Simpson
 	MIT License
 */
 

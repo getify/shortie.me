@@ -1,3 +1,8 @@
+/*!	Shortie.me URL Shortener (validate.js)
+	(c) Kyle Simpson
+	MIT License
+*/
+
 (function(global){
 
 	global.ValidateURL = function(url) {

@@ -1,5 +1,10 @@
 {$+ "views/tmpl.master.html" $}
 
+{$/	Shortie.me URL Shortener (tmpl.index.html)
+	(c) Kyle Simpson
+	MIT License
+/$}
+
 
 {$: "#content" | shortened=data.shortened_url_slug?"#shortened" | recent=data.result_set?"#recent" }
 	<div id="indicator"></div>

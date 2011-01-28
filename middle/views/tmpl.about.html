@@ -1,5 +1,11 @@
 {$+ "views/tmpl.master.html" $}
 
+{$/	Shortie.me URL Shortener (tmpl.about.html)
+	(c) Kyle Simpson
+	MIT License
+/$}
+
+
 {$: "#pagetitle" } :: About{$}
 
 {$: "#content" | shortened=data.shortened_url_slug?"#shortened" | recent=data.result_set?"#recent" }

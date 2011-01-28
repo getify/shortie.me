@@ -1,4 +1,9 @@
 <?php
+/*!	Shortie.me URL Shortener (shorten.php)
+	(c) Kyle Simpson
+	MIT License
+*/
+
 
 function generate_slug() {
 	global $SHDB, $reserved_slugs;

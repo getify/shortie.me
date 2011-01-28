@@ -1,3 +1,10 @@
+/*!	Shortie.me URL Shortener (main.js)
+	(c) Kyle Simpson
+	MIT License
+*/
+
+// Browser UI Controller
+
 var submit_in_progress = false;
 
 function updateResults(data) {
