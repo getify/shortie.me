@@ -65,7 +65,7 @@ if ($REQUEST) {
 				$shortened_url = null;
 				
 				// trying to cut down on link spam
-				if (preg_match("/(?:docs\.codehaus\.org)|(?:\.edu)|(?:wiki)|(?:\.pdf)|(?:\bloan\b)/",$orig_url)) {
+				if (preg_match("/(?:docs\.codehaus\.org)|(?:\.edu)|(?:wiki)|(?:\.pdf)|(?:\bloan\b)|(doc\.freevo\.org\/sahop\?action=AttachFile)/",$orig_url)) {
 					$error_output = array("APP_STATE" => "error", "ERROR" => "input_error", "ERROR_DATA" => array("orig_url" => $orig_url));
 				}
 				else {
