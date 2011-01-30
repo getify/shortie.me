@@ -41,7 +41,7 @@ if ($REQUEST) {
 	
 	if ($REQUEST->RELATIVE_REQUEST_PATH == "/") {
 		$output["APP_STATE"] = "index";
-		$output["APP_DATA"] = $output["APP_DATA"] || array();
+		$output["APP_DATA"] = isset($output["APP_DATA"]) ? $output["APP_DATA"] : array();
 		
 		require_once($REQUEST->DOCUMENT_ROOT."/back/results.php");
 		
