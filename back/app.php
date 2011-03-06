@@ -65,7 +65,7 @@ if ($REQUEST) {
 				$shortened_url = null;
 				
 				// trying to cut down on link spam
-				if (preg_match("/(?:docs\.codehaus\.org)|(?:\.edu)|(?:wiki)|(?:\.pdf)|(?:\bloan\b)|(?:doc\.freevo\.org\/sahop\?action=AttachFile)|(?:intevation\.org)|(?:uploads)|(?:download\.php\/\d+)|(?:communitywalk)|(?:wetpaint)|(?:grouply)|(?:cialis)|(?:viagra)/i",$orig_url)) {
+				if (preg_match("/(?:docs\.codehaus\.org)|(?:\.edu)|(?:wiki)|(?:\.pdf)|(?:\bloan\b)|(?:doc\.freevo\.org\/sahop\?action=AttachFile)|(?:intevation\.org)|(?:uploads)|(?:download\.php\/\d+)|(?:communitywalk)|(?:wetpaint)|(?:grouply)|(?:cialis)|(?:viagra)|(?:linkedin\.com\/share)|(?:github\.com\/downloads)/i",$orig_url)) {
 					$error_output = array("APP_STATE" => "error", "ERROR" => "input_error", "ERROR_DATA" => array("orig_url" => $orig_url));
 				}
 				else {
