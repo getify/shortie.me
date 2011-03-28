@@ -61,7 +61,7 @@ if ($REQUEST) {
 		}
 	
 		if ($orig_url) {
-			if (!$REQUEST->__INVALIDATED__ || !in_array("orig_url",$REQUEST->__INVALIDATED__)) {
+			if (!isset($REQUEST->__INVALIDATED__) || !$REQUEST->__INVALIDATED__ || !in_array("orig_url",$REQUEST->__INVALIDATED__)) {
 				$shortened_url = null;
 				
 				// trying to cut down on link spam
@@ -79,7 +79,7 @@ if ($REQUEST) {
 					$result = mysql_query($query,$SHDB);
 					
 					if ($result && mysql_affected_rows($SHDB) > 0) {
-						$output["APP_DATA"] = $output["APP_DATA"] || array();
+						$output["APP_DATA"] = isset($output["APP_DATA"]) ? $output["APP_DATA"] : array();
 						$output["APP_STATE"] = "shortened_url";
 						$output["APP_DATA"] = array("orig_url" => $orig_url, "shortened_url_slug" => $slug);
 						$parts = parse_url($orig_url);
