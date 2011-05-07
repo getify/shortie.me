@@ -6,7 +6,7 @@
 
 // NOTE: routing defaults to handling all requests
 [		
-	{ "ignore": "^favicon.ico$", "field": "REQUEST_FILENAME", "path_prefix": "../front" },
+	{ "ignore": "^(favicon\\.ico)$", "field": "REQUEST_FILENAME", "path_prefix": "../front" },
 	
 	{ "ignore": "^/(css|js|images)/", "field": "RELATIVE_REQUEST_DIRECTORY", "path_prefix": "../front" },
 	
